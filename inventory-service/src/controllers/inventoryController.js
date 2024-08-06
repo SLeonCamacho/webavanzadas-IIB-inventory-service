@@ -1,4 +1,3 @@
-// src/controllers/inventoryController.js
 const { pool } = require('../config/database');
 const axios = require('axios');
 
