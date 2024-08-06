@@ -20,7 +20,7 @@ app.get('/insert-data', async (req, res) => {
 });
 
 // Rutas de inventario
-app.use('/inventory', inventoryRoutes);
+app.use('/', inventoryRoutes);
 
 // Endpoint para probar la conexión
 app.get('/', (req, res) => {

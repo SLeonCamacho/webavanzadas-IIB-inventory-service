@@ -1,4 +1,3 @@
-// src/routes/inventoryRoutes.js
 const express = require('express');
 const {
   getAllInventory,
