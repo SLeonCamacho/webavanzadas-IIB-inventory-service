@@ -1,7 +1,4 @@
 const { pool } = require('../config/database');
-const axios = require('axios');
-
-// Middleware para verificar el token JWT
 const verifyToken = require('../middleware/authMiddleware');
 
 const getAllInventory = async (req, res) => {
@@ -33,6 +30,23 @@ const getInventoryByProductName = async (req, res) => {
   } catch (error) {
     console.error('Error fetching inventory by product name:', error);
     res.status(500).send('Error fetching inventory by product name');
+  }
+};
+
+const getInventoryByUserId = async (req, res) => { // Nueva función
+  const { userId } = req.params;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM Inventory WHERE user_id = $1', [userId]);
+    client.release();
+    if (result.rows.length === 0) {
+      return res.status(404).send('Inventory not found');
+    }
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error('Error fetching inventory by user ID:', error);
+    res.status(500).send('Error fetching inventory by user ID');
   }
 };
 
@@ -99,4 +113,5 @@ module.exports = {
   createInventory,
   updateInventory,
   deleteInventory,
+  getInventoryByUserId, // Exporta la nueva función
 };
